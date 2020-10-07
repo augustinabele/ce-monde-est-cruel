@@ -8,7 +8,36 @@ use Hackathon\Game\Result;
  * Class TangeninePlayers
  * @package Hackathon\PlayerIA
  * @author Augustin Abelé
+ *
+ * Description :
+ *
+ *
  */
+
+// -------------------------------------    -----------------------------------------------------
+// How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
+// How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
+// -------------------------------------    -----------------------------------------------------
+// How to get my Last Score            ?    $this->result->getLastScoreFor($this->mySide) -- if 0 (first round)
+// How to get the opponent Last Score  ?    $this->result->getLastScoreFor($this->opponentSide) -- if 0 (first round)
+// -------------------------------------    -----------------------------------------------------
+// How to get all the Choices          ?    $this->result->getChoicesFor($this->mySide)
+// How to get the opponent Last Choice ?    $this->result->getChoicesFor($this->opponentSide)
+// -------------------------------------    -----------------------------------------------------
+// How to get my Last Score            ?    $this->result->getLastScoreFor($this->mySide)
+// How to get the opponent Last Score  ?    $this->result->getLastScoreFor($this->opponentSide)
+// -------------------------------------    -----------------------------------------------------
+// How to get the stats                ?    $this->result->getStats()
+// How to get the stats for me         ?    $this->result->getStatsFor($this->mySide)
+//          array('name' => value, 'score' => value, 'friend' => value, 'foe' => value
+// How to get the stats for the oppo   ?    $this->result->getStatsFor($this->opponentSide)
+//          array('name' => value, 'score' => value, 'friend' => value, 'foe' => value
+// -------------------------------------    -----------------------------------------------------
+// How to get the number of round      ?    $this->result->getNbRound()
+// -------------------------------------    -----------------------------------------------------
+// How can i display the result of each round ? $this->prettyDisplay()
+// -------------------------------------    -----------------------------------------------------
+
 class TangeninePlayer extends Player
 {
     protected $mySide;
@@ -26,34 +55,28 @@ class TangeninePlayer extends Player
         }
     }
 
+    /*
+     * Get last winner
+     * me : 1
+     * opponent : -1
+     * draw : 0
+    */
+    private function getLastResult() {
+        $myLastChoice = $this->result->getLastScoreFor($this->mySide);
+        $opponentLastChoice = $this->result->getLastScoreFor($this->opponentSide);
+
+        return $myLastChoice <=> $opponentLastChoice;
+    }
+
+
     public function getChoice()
     {
-        // -------------------------------------    -----------------------------------------------------
-        // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
-        // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get my Last Score            ?    $this->result->getLastScoreFor($this->mySide) -- if 0 (first round)
-        // How to get the opponent Last Score  ?    $this->result->getLastScoreFor($this->opponentSide) -- if 0 (first round)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get all the Choices          ?    $this->result->getChoicesFor($this->mySide)
-        // How to get the opponent Last Choice ?    $this->result->getChoicesFor($this->opponentSide)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get my Last Score            ?    $this->result->getLastScoreFor($this->mySide)
-        // How to get the opponent Last Score  ?    $this->result->getLastScoreFor($this->opponentSide)
-        // -------------------------------------    -----------------------------------------------------
-        // How to get the stats                ?    $this->result->getStats()
-        // How to get the stats for me         ?    $this->result->getStatsFor($this->mySide)
-        //          array('name' => value, 'score' => value, 'friend' => value, 'foe' => value
-        // How to get the stats for the oppo   ?    $this->result->getStatsFor($this->opponentSide)
-        //          array('name' => value, 'score' => value, 'friend' => value, 'foe' => value
-        // -------------------------------------    -----------------------------------------------------
-        // How to get the number of round      ?    $this->result->getNbRound()
-        // -------------------------------------    -----------------------------------------------------
-        // How can i display the result of each round ? $this->prettyDisplay()
-        // -------------------------------------    -----------------------------------------------------
-
         $myLastChoice = $this->result->getLastChoiceFor($this->mySide);
-        $opponentSide = $this->result->getLastChoiceFor($this->opponentSide);
+        $opponentLastChoice = $this->result->getLastChoiceFor($this->opponentSide);
+
+        echo TangeninePlayer::getLastWinner();
+        echo "\n";
+        return parent::paperChoice();
 
         // first round
         if ($this->result->getNbRound() === 0)
@@ -61,15 +84,22 @@ class TangeninePlayer extends Player
             return parent::paperChoice();
         }
 
-        // // win last game
-        if ($this->result->getLastScoreFor($this->mySide) === 3)
+        // draw last game
+        if (TangeninePlayer::getLastResult() === 0)
         {
             return $myLastChoice;
         }
+        // win last game
+        elseif (TangeninePlayer::getLastResult() === 1)
+        {
+            return $myLastChoice;
+        }
+        // win last game
         else {
-            return TangeninePlayer::getKillerChoice($opponentSide);
+            return TangeninePlayer::getKillerChoice($opponentLastChoice);
         }
 
+        // default
         return parent::paperChoice();
 
     }
