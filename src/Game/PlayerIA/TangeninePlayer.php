@@ -7,7 +7,7 @@ use Hackathon\Game\Result;
 /**
  * Class TangeninePlayers
  * @package Hackathon\PlayerIA
- * @author YOUR NAME HERE
+ * @author Augustin Abelé
  */
 class TangeninePlayer extends Player
 {
@@ -42,7 +42,7 @@ class TangeninePlayer extends Player
         // -------------------------------------    -----------------------------------------------------
 
 
-        return parent::rockChoice();
+        return parent::paperChoice();
 
     }
 };

@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":294:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:4:{s:51:"Hackathon\Tests\GameTest::testPlop with data set #0";d:0.001;s:58:"Hackathon\Tests\GameTest::testFirstChoice with data set #0";d:0;s:54:"Hackathon\Tests\GameTest::testChoices with data set #0";d:0;s:35:"Hackathon\Tests\GameTest::testFiles";d:0;}}}
