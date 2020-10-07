@@ -52,6 +52,9 @@ class TangeninePlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
 
+        $myLastChoice = $this->result->getLastChoiceFor($this->mySide);
+        $opponentSide = $this->result->getLastChoiceFor($this->opponentSide);
+
         // first round
         if ($this->result->getNbRound() === 0)
         {
@@ -61,10 +64,10 @@ class TangeninePlayer extends Player
         // // win last game
         if ($this->result->getLastScoreFor($this->mySide) === 3)
         {
-            return parent::paperChoice();
+            return $myLastChoice;
         }
         else {
-            return TangeninePlayer::getKillerChoice($this->result->getLastChoiceFor($this->opponentSide));
+            return TangeninePlayer::getKillerChoice($opponentSide);
         }
 
         return parent::paperChoice();
