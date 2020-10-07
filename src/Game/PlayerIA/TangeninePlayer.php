@@ -41,6 +41,20 @@ class TangeninePlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
 
+        // first round
+        if ($this->result->getNbRound() === 0)
+        {
+            return parent::paperChoice();
+        }
+
+        // // win last game
+        if ($this->result->getLastScoreFor($this->mySide) === 3)
+        {
+            return parent::rockChoice();
+        }
+        else {
+            return parent::rockChoice();
+        }
 
         return parent::paperChoice();
 
