@@ -15,6 +15,17 @@ class TangeninePlayer extends Player
     protected $opponentSide;
     protected $result;
 
+    private function getKillerChoice($choice) {
+        switch ($choice) {
+            case 'scissors':
+                return 'rock';
+            case 'paper':
+                return 'scissors';
+            case 'rock':
+                return 'paper';
+        }
+    }
+
     public function getChoice()
     {
         // -------------------------------------    -----------------------------------------------------
@@ -53,7 +64,7 @@ class TangeninePlayer extends Player
             return parent::paperChoice();
         }
         else {
-            return parent::rockChoice();
+            return TangeninePlayer::getKillerChoice($this->result->getLastChoiceFor($this->opponentSide));
         }
 
         return parent::paperChoice();
