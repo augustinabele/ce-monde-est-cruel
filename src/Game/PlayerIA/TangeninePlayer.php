@@ -10,7 +10,8 @@ use Hackathon\Game\Result;
  * @author Augustin Abelé
  *
  * Description :
- *
+ * - Get the real winner (no hardcoded value)
+ * - Get opposite choice of this opponent
  *
  */
 
@@ -44,6 +45,9 @@ class TangeninePlayer extends Player
     protected $opponentSide;
     protected $result;
 
+    /*
+     * Get opposite choice
+     */
     private function getKillerChoice($choice) {
         switch ($choice) {
             case 'scissors':
@@ -68,15 +72,10 @@ class TangeninePlayer extends Player
         return $myLastChoice <=> $opponentLastChoice;
     }
 
-
     public function getChoice()
     {
         $myLastChoice = $this->result->getLastChoiceFor($this->mySide);
         $opponentLastChoice = $this->result->getLastChoiceFor($this->opponentSide);
-
-        echo TangeninePlayer::getLastWinner();
-        echo "\n";
-        return parent::paperChoice();
 
         // first round
         if ($this->result->getNbRound() === 0)
@@ -94,7 +93,7 @@ class TangeninePlayer extends Player
         {
             return $myLastChoice;
         }
-        // win last game
+        // lose last game
         else {
             return TangeninePlayer::getKillerChoice($opponentLastChoice);
         }
