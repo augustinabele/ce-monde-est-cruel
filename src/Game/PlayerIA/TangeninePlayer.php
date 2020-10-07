@@ -50,7 +50,7 @@ class TangeninePlayer extends Player
         // // win last game
         if ($this->result->getLastScoreFor($this->mySide) === 3)
         {
-            return parent::rockChoice();
+            return parent::paperChoice();
         }
         else {
             return parent::rockChoice();
